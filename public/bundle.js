@@ -11321,49 +11321,49 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Albums = function Albums(props) {
 
-  console.log('props', props);
   var albums = props.albums;
   var selectAlbum = props.selectAlbum;
-  var albumId = props.selectedAlbum.albumId;
+  // const albumId =props.selectedAlbum.albumId
+  {/*<Link to={`/albums/${this.props.albumId}`} */}
 
   return _react2.default.createElement(
-    'div',
+    "div",
     null,
     _react2.default.createElement(
-      'h3',
+      "h3",
       null,
-      'Albums'
+      "Albums"
     ),
     _react2.default.createElement(
-      'div',
-      { className: 'row' },
+      "div",
+      { className: "row" },
       albums.map(function (album) {
         return _react2.default.createElement(
-          'div',
-          { className: 'col-xs-4', key: album.id },
+          "div",
+          { className: "col-xs-4", key: album.id },
           _react2.default.createElement(
-            Link,
-            { to: '/albums/' + undefined.props.albumId, className: 'thumbnail', href: '#', onClick: function onClick() {
+            "a",
+            { className: "thumbnail", href: "#", onClick: function onClick() {
                 return selectAlbum(album.id);
               } },
-            _react2.default.createElement('img', { src: album.imageUrl }),
+            _react2.default.createElement("img", { src: album.imageUrl }),
             _react2.default.createElement(
-              'div',
-              { className: 'caption' },
+              "div",
+              { className: "caption" },
               _react2.default.createElement(
-                'h5',
+                "h5",
                 null,
                 _react2.default.createElement(
-                  'span',
+                  "span",
                   null,
                   album.name
                 )
               ),
               _react2.default.createElement(
-                'small',
+                "small",
                 null,
                 album.songs.length,
-                ' songs'
+                " songs"
               )
             )
           )
