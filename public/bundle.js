@@ -12985,6 +12985,8 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouter = __webpack_require__(35);
+
 var _Songs = __webpack_require__(45);
 
 var _Songs2 = _interopRequireDefault(_Songs);
@@ -13022,28 +13024,66 @@ var Artist = function (_Component) {
     key: 'render',
     value: function render() {
       console.log('props', this.props);
-      console.log('props.artist', this.props.artist.albums);
-      // can add consts here
+      var selectedArtist = this.props.artist;
+      var children = this.props.children;
+      var propsToPassToChildren = {
+        albums: this.props.artist.albums,
+        songs: this.props.artist.songs,
+        currentSong: this.props.currentSong
+        /**todo: make sure to include all the props that the child components need! **/
+      };
+
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
           'h3',
           null,
-          this.props.artist.name
+          selectedArtist.name
         ),
-        _react2.default.createElement(_Albums2.default, { albums: this.props.artist.albums }),
-        _react2.default.createElement(_Songs2.default, { songs: this.props.artist.songs, currentSong: this.props.currentSong })
+        _react2.default.createElement(
+          'ul',
+          { className: 'nav nav-tabs' },
+          _react2.default.createElement(
+            'li',
+            null,
+            _react2.default.createElement(
+              _reactRouter.Link,
+              { to: '/artists/' + selectedArtist.id + '/albums' },
+              'ALBUMS'
+            )
+          ),
+          _react2.default.createElement(
+            'li',
+            null,
+            _react2.default.createElement(
+              _reactRouter.Link,
+              { to: '/artists/' + selectedArtist.id + '/songs' },
+              'SONGS'
+            )
+          )
+        ),
+        children && _react2.default.cloneElement(children, propsToPassToChildren)
       );
     }
+
+    /*render() {
+       // can add consts here
+      return (
+         <div>
+          <h3>{this.props.artist.name}</h3>
+          <Albums albums={this.props.artist.albums}/>
+          <Songs songs={this.props.artist.songs} currentSong={this.props.currentSong}/>
+        </div>
+       )
+    }*/
+
   }]);
 
   return Artist;
 }(_react.Component);
 
 exports.default = Artist;
-
-
 {/*<div className="album">
          <div>
            <h3>{this.props.album.name}</h3>
