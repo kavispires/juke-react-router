@@ -4,6 +4,7 @@ import { Router, Route, Link} from 'react-router';
 const Albums = (props) => {
 
   const albums = props.albums;
+  // console.log('albums.js', albums);
   const selectAlbum = props.selectAlbum;
   // const albumId =props.selectedAlbum.albumId
   {/*<Link to={`/albums/${this.props.albumId}`} */ }
@@ -14,7 +15,7 @@ const Albums = (props) => {
       <h3>Albums</h3>
       <div className="row">
         {
-          albums.map(album => (
+          albums && albums.map(album => (
             <div className="col-xs-4" key={album.id}>
               <Link to={`/albums/${album.id}`} className="thumbnail" href="#" >
                 <img src={album.imageUrl} />

@@ -15,13 +15,14 @@ export default class Artist extends Component {
 
   render() {
     console.log('props', this.props)
+    console.log('props.artist', this.props.artist.albums)
     // can add consts here
     return (
 
       <div>
         <h3>{this.props.artist.name}</h3>
-        <Albums />
-        <Songs />
+        <Albums albums={this.props.artist.albums}/>
+        <Songs songs={this.props.artist.songs} currentSong={this.props.currentSong}/>
       </div>
 
     )

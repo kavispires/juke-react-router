@@ -112,18 +112,35 @@ export default class AppContainer extends Component {
       .then(artist => this.setState({
         selectedArtist: artist
       }))
+      .then(this.loadArtistAlbums(artistId))
   }
 
   loadArtistAlbums(artistId) {
     axios.get(`/api/artists/${artistId}/albums`)
       .then(res => res.data)
       .then(albums => {
+        const selectedArtist = this.state.selectedArtist;
+        selectedArtist.albums = convertAlbums(albums);
         this.setState({
-          selectedArtist: this.state.selectedArtist.albums
-        })
+          selectedArtist: selectedArtist
+        });
       })
-
+      .then(this.loadArtistSongs(artistId));
   }
+
+  loadArtistSongs(artistId) {
+    axios.get(`/api/artists/${artistId}/songs`)
+      .then(res => res.data)
+      .then(songs => {
+        const selectedArtist = this.state.selectedArtist;
+        selectedArtist.songs = songs;
+        this.setState({
+          selectedArtist: selectedArtist
+        });
+      });
+  }
+
+
 
   // no longer needed in sidebar
   // deselectAlbum() {
