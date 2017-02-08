@@ -22,13 +22,21 @@ export default class AppContainer extends Component {
     this.next = this.next.bind(this);
     this.prev = this.prev.bind(this);
     this.selectAlbum = this.selectAlbum.bind(this);
-    this.deselectAlbum = this.deselectAlbum.bind(this);
+    this.selectArtist = this.selectArtist.bind(this);
+    // this.deselectAlbum = this.deselectAlbum.bind(this);
   }
 
   componentDidMount() {
     axios.get('/api/albums/')
       .then(res => res.data)
       .then(album => this.onLoad(convertAlbums(album)));
+
+    axios.get('/api/artists/')
+      .then(res => res.data)
+      .then(artists =>
+        this.setState({
+          artists
+        }))
 
     AUDIO.addEventListener('ended', () =>
       this.next());
@@ -98,9 +106,29 @@ export default class AppContainer extends Component {
       }));
   }
 
-  deselectAlbum() {
-    this.setState({ selectedAlbum: {} });
+  selectArtist(artistId) {
+    axios.get(`/api/artists/${artistId}`)
+      .then(res => res.data)
+      .then(artist => this.setState({
+        selectedArtist: artist
+      }))
   }
+
+  loadArtistAlbums(artistId) {
+    axios.get(`/api/artists/${artistId}/albums`)
+      .then(res => res.data)
+      .then(albums => {
+        this.setState({
+          selectedArtist: this.state.selectedArtist.albums
+        })
+      })
+
+  }
+
+  // no longer needed in sidebar
+  // deselectAlbum() {
+  //   this.setState({ selectedAlbum: {} });
+  // }
 
   render() {
     return (
@@ -121,7 +149,17 @@ export default class AppContainer extends Component {
 
                 // Albums (plural) component's props
                 albums: this.state.albums,
-                selectAlbum: this.selectAlbum // note that this.selectAlbum is a method, and this.state.selectedAlbum is the chosen album
+                selectAlbum: this.selectAlbum, // note that this.selectAlbum is a method, and this.state.selectedAlbum is the chosen album
+
+                // Artists
+                artists: this.state.artists,
+                selectArtist: this.selectArtist,
+
+                // Artist
+                artist: this.state.selectedArtist
+
+
+
               })
               : null
           }
