@@ -58,3 +58,7 @@ footer {
 
 .album img {
   height: 300px; }
+
+.nav-tabs .active {
+  background: red;
+}
